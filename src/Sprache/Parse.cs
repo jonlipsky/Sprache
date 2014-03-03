@@ -78,7 +78,7 @@ namespace Sprache
         /// <returns></returns>
         public static Parser<char> Chars(string c)
         {
-            return Char(c.Contains, string.Join("|", c.ToCharArray()));
+			return Char(c.ToCharArray().Contains, string.Join("|", c.ToCharArray()));
         }
 
 
@@ -110,7 +110,7 @@ namespace Sprache
         /// <returns></returns> 
         public static Parser<char> CharExcept(string c)
         {
-            return CharExcept(c.Contains, string.Join("|", c.ToCharArray()));
+			return CharExcept(c.ToCharArray().Contains, string.Join("|", c.ToCharArray()));
         }
 
         /// <summary>
@@ -132,8 +132,8 @@ namespace Sprache
         {
             if (s == null) throw new ArgumentNullException("s");
 
-            return s
-                .Select(IgnoreCase)
+			return s.ToCharArray()
+				.Select(IgnoreCase)
                 .Aggregate(Return(Enumerable.Empty<char>()),
                     (a, p) => a.Concat(p.Once()))
                 .Named(s);
@@ -188,7 +188,7 @@ namespace Sprache
         {
             if (s == null) throw new ArgumentNullException("s");
 
-            return s
+			return s.ToCharArray()
                 .Select(Char)
                 .Aggregate(Return(Enumerable.Empty<char>()),
                     (a, p) => a.Concat(p.Once()))
